@@ -1,4 +1,4 @@
-package main
+package list_timers
 
 import (
 	"flag"
@@ -6,48 +6,37 @@ import (
 	"io/ioutil"
 	"log"
 
-	aw "github.com/deanishe/awgo"
+	. "wwei10.com/go-timer/alfred"
 	. "wwei10.com/go-timer/utils"
 )
 
-var (
-	// Use timers directory to store all active timers
-	timersDirectory = "/tmp/timers"
-
-	// Command-line flags
-	query string
-
-	// Workflow
-	wf *aw.Workflow
-)
-
-func init() {
-	wf = aw.New()
-}
-
-func run() {
-	wf.Args()
+func listTimers() {
 	flag.Parse()
+	var query string
 	if args := flag.Args(); len(args) > 0 {
 		query = args[0]
 	}
 	log.Printf("[main] query=%s", query)
 
 	// Fetch all active timers
-	files, err := ioutil.ReadDir(timersDirectory)
+	files, err := ioutil.ReadDir(DIRECTORY)
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	response := MakeResponse()
 	for _, file := range files {
-		log.Printf(file.Name())
-		timer := *NewTimerFromString(file.Name())
-		wf.NewItem(fmt.Sprintf("Timer %s: %d minutes left", timer.Name, timer.EndTime))
+		log.Printf("filename", file.Name())
+		timer := *NewTimerFromFileName(file.Name())
+		response.Items = append(response.Items, Item{fmt.Sprintf("Timer %s %d minutes left", timer.Name, GetRemainingMinutes(timer)), false})
+		log.Println("timer", timer)
 	}
-
-	wf.SendFeedback()
+	log.Println("before tojson", response)
+	ret := ToJson(response)
+	log.Println("json response", ret)
+	fmt.Println(ret)
 }
 
 func main() {
-	wf.Run(run)
+	listTimers()
 }
