@@ -13,7 +13,6 @@ import (
 func createTimers() {
 	var query string
 	flag.Parse()
-	log.Println(flag.Args())
 	if args := flag.Args(); len(args) > 0 {
 		query = args[0]
 	}
