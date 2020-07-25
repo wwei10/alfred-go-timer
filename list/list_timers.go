@@ -1,4 +1,4 @@
-package list_timers
+package main
 
 import (
 	"flag"
