@@ -2,5 +2,6 @@ program
 list_timers
 create_timers
 time
+install.sh
 .idea/
 .DS_Store
