@@ -3,8 +3,10 @@ package alfred
 import "encoding/json"
 
 type Item struct {
-	Title string `json:"title"`
-	Valid bool   `json:"valid"`
+	Title    string `json:"title"`
+	Valid    bool   `json:"valid"`
+	Subtitle string `json:"subtitle"`
+	Arg      string `json:"arg"`
 }
 
 type Response struct {
