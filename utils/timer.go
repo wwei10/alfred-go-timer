@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"math"
 	"regexp"
 	"strconv"
 	"time"
@@ -20,7 +21,8 @@ func NewTimer(name string, endTime int64) *Timer {
 }
 
 func GetRemainingMinutes(timer Timer) int64 {
-	return int64(time.Unix(timer.EndTime, 0).Sub(time.Now()).Minutes())
+	remaining := time.Unix(timer.EndTime, 0).Sub(time.Now()).Minutes()
+	return int64(math.Abs(remaining))
 }
 
 func GetFileNameFromTimer(timer Timer) string {

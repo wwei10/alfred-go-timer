@@ -11,6 +11,7 @@ import (
 )
 
 func listTimers() {
+	listExpired := flag.Bool("expired", false, "true if you want to list expired timers")
 	flag.Parse()
 	var query string
 	if args := flag.Args(); len(args) > 0 {
@@ -19,7 +20,11 @@ func listTimers() {
 	log.Printf("[main] query=%s", query)
 
 	// Fetch all active timers
-	files, err := ioutil.ReadDir(DIRECTORY)
+	directory := DIRECTORY
+	if *listExpired {
+		directory = EXPIRED_DIRECTORY
+	}
+	files, err := ioutil.ReadDir(directory)
 	if err != nil {
 		log.Fatal(err)
 	}
