@@ -26,9 +26,13 @@ func listTimers() {
 
 	response := MakeResponse()
 	for _, file := range files {
-		log.Printf("filename", file.Name())
 		timer := *NewTimerFromFileName(file.Name())
-		response.Items = append(response.Items, Item{fmt.Sprintf("Timer %s %d minutes left", timer.Name, GetRemainingMinutes(timer)), false})
+		response.Items = append(
+			response.Items,
+			Item{
+				Title: fmt.Sprintf("Timer %s %d minutes left", timer.Name, GetRemainingMinutes(timer)),
+				Valid: false,
+			})
 		log.Println("timer", timer)
 	}
 	log.Println("before tojson", response)
