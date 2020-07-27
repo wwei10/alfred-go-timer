@@ -22,7 +22,7 @@ func NewTimer(name string, endTime int64) *Timer {
 
 func GetRemainingMinutes(timer Timer) int64 {
 	remaining := time.Unix(timer.EndTime, 0).Sub(time.Now()).Minutes()
-	return int64(math.Abs(remaining))
+	return int64(math.Max(0, remaining))
 }
 
 func GetFileNameFromTimer(timer Timer) string {
