@@ -11,7 +11,7 @@ type Timer struct {
 	EndTime int64
 }
 
-const DIRECTORY = "/tmp/timers"
+const DIRECTORY = "timers"
 
 func NewTimer(name string, endTime int64) *Timer {
 	t := Timer{Name: name, EndTime: endTime}
