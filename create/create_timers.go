@@ -21,6 +21,7 @@ func createTimers() {
 	// Parse query
 	timer := *NewTimerFromQuery(query)
 	fileName := DIRECTORY + "/" + GetFileNameFromTimer(timer)
+	expiredTimerFileName := EXPIRED_DIRECTORY + "/" + GetFileNameFromTimer(timer)
 	log.Println("fileName", fileName)
 	file, err := os.Create(fileName)
 	if err != nil {
@@ -40,11 +41,11 @@ func createTimers() {
 
 	// Do nothing if file no longer exists
 	if !os.IsNotExist(err) {
-		err = os.Remove(fileName)
+		err = os.Rename(fileName, expiredTimerFileName)
 		if err != nil {
-			log.Println("Remove file failed")
+			log.Fatal("Failure in renaming timer file")
 		}
-		fmt.Println("Timer finished")
+		fmt.Printf("Timer %s finished", timer.Name)
 	}
 }
 

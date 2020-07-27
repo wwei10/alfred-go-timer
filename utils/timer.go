@@ -12,6 +12,7 @@ type Timer struct {
 }
 
 const DIRECTORY = "timers"
+const EXPIRED_DIRECTORY = "expired"
 
 func NewTimer(name string, endTime int64) *Timer {
 	t := Timer{Name: name, EndTime: endTime}
