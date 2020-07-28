@@ -35,7 +35,11 @@ func listTimers() {
 		response.Items = append(
 			response.Items,
 			Item{
-				Title: fmt.Sprintf("Timer %s %d minutes left", timer.Name, GetRemainingMinutes(timer)),
+				Title: fmt.Sprintf(
+					"Name: %s, duration: %d minutes, %d minutes left",
+					timer.Name,
+					GetDuration(timer),
+					GetRemainingMinutes(timer)),
 				Valid: false,
 			})
 		log.Println("timer", timer)
