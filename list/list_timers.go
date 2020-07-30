@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"strconv"
 
 	. "wwei10.com/go-timer/alfred"
 	. "wwei10.com/go-timer/utils"
@@ -40,7 +41,8 @@ func listTimers() {
 					timer.Name,
 					GetDuration(timer),
 					GetRemainingMinutes(timer)),
-				Valid: false,
+				Valid: true,
+				Arg:   strconv.FormatInt(timer.EndTime, 10),
 			})
 		log.Println("timer", timer)
 	}
