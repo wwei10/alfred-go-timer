@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
+	"strconv"
 	"time"
 
 	. "wwei10.com/go-timer/utils"
@@ -29,9 +31,17 @@ func createTimers() {
 		file.Close()
 	}
 
+	// Integrate with BlockSite app
+	cmd := exec.Command(
+		"open",
+		"-a",
+		"Safari",
+		"blocksite://add?"+strconv.FormatInt(int64(timer.Duration/60), 10))
+	cmd.Run()
+
 	// Sleep
-	log.Println("End time: ", timer.EndTime, "now: ", time.Now().Unix())
 	duration := time.Unix(timer.EndTime, 0).Sub(time.Now())
+	log.Println("End time: ", timer.EndTime, "now: ", time.Now().Unix())
 	log.Println("Preparing to sleep", duration.Minutes())
 	time.Sleep(duration)
 	log.Println("Finished sleeping", duration.Minutes())
